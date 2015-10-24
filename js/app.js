@@ -42,20 +42,32 @@ Player.prototype.render = function () {
 
 Player.prototype.handleInput = function () {
     var key = arguments[0];
-    var vert = 83, lat = 101;
+
+    var vertMove = 83,
+        latMove = 101;
+
+    var upperBound = -14,
+        lowerBound = 400,
+        leftBound = -2,
+        rightBound = 402;
+
     switch(key) {
         case 'up':
-            this.y -= vert;
-            break;
+            if (this.y > upperBound)
+                this.y -= vertMove;
+                break;
         case 'down':
-            this.y += vert;
-            break;
+            if (this.y < lowerBound)
+                this.y += vertMove;
+                break;
         case 'left':
-            this.x -= lat;
-            break;
+            if (this.x > leftBound)
+                this.x -= latMove;
+                break;
         case 'right':
-            this.x += lat;
-            break;
+            if (this.x < rightBound)
+                this.x += latMove;
+                break;
     }
 };
 
