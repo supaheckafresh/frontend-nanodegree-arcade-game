@@ -42,18 +42,19 @@ Player.prototype.render = function () {
 
 Player.prototype.handleInput = function () {
     var key = arguments[0];
+    var vert = 83, lat = 101;
     switch(key) {
         case 'up':
-            this.y -= 83;
+            this.y -= vert;
             break;
         case 'down':
-            this.y += 83;
+            this.y += vert;
             break;
         case 'left':
-            this.x -= 101;
+            this.x -= lat;
             break;
         case 'right':
-            this.x += 101;
+            this.x += lat;
             break;
     }
 };
@@ -63,8 +64,15 @@ Player.prototype.handleInput = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player(200, 400);
-var allEnemies = [new Enemy()];
 
+var allEnemies = makeEnemies(4);
+
+function makeEnemies(quantity) {
+    var enemies  =[];
+    for (var i = 1; i <= quantity; i++)
+        enemies.push(new Enemy());
+    return enemies;
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
