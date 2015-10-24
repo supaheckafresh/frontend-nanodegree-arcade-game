@@ -44,16 +44,16 @@ Player.prototype.handleInput = function () {
     var key = arguments[0];
     switch(key) {
         case 'up':
-            player.y -= 83;
+            this.y -= 83;
             break;
         case 'down':
-            player.y += 83;
+            this.y += 83;
             break;
         case 'left':
-            player.x -= 101;
+            this.x -= 101;
             break;
         case 'right':
-            player.x += 101;
+            this.x += 101;
             break;
     }
 };
