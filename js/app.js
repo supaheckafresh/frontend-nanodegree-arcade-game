@@ -5,10 +5,13 @@ var Enemy = function () {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    //TODO
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
-    this.y = 100;
+
+    var rows = [60, 143, 226, 309];
+    this.y = rows[Math.floor(Math.random() * 4)];
+
+    this.speed = Math.floor(Math.random() * 5) + 1;
 };
 
 // Update the enemy's position, required method for game
@@ -22,7 +25,12 @@ Enemy.prototype.update = function (dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    this.x += 2;
+    this.crawl();
+};
+
+Enemy.prototype.crawl = function () {
+    var speedWithVariancePerFrame = (Math.random() * this.speed) + 1;
+    this.x += speedWithVariancePerFrame;
 };
 
 // Now write your own player class
@@ -79,7 +87,6 @@ Player.prototype.handleInput = function () {
 var player = new Player(200, 400);
 
 
-//TODO approx enemy y start points 60, 143, 226
 var allEnemies = makeEnemies(4);
 
 function makeEnemies(quantity) {
