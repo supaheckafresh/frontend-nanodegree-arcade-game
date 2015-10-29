@@ -22,6 +22,7 @@ Enemy.prototype.update = function (dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.x += 2;
 };
 
 // Now write your own player class
@@ -77,6 +78,8 @@ Player.prototype.handleInput = function () {
 // Place the player object in a variable called player
 var player = new Player(200, 400);
 
+
+//TODO approx enemy y start points 60, 143, 226
 var allEnemies = makeEnemies(4);
 
 function makeEnemies(quantity) {
