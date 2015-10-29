@@ -29,8 +29,8 @@ Enemy.prototype.update = function (dt) {
 };
 
 Enemy.prototype.crawl = function () {
-    var speedWithVariancePerFrame = (Math.random() * this.speed) + 1;
-    this.x += speedWithVariancePerFrame;
+    var jigglySpeed = (Math.random() * this.speed) + 1;
+    this.x += jigglySpeed;
 };
 
 // Now write your own player class
