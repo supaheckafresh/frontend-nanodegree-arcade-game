@@ -1,6 +1,7 @@
 
-//difficulty setting positively affects average bug speeds.
-var difficulty = 1;
+// Difficulty setting positively affects average bug
+// speeds and number of bugs on canvas (plus 2).
+var difficulty = 2;
 
 // Enemies our player must avoid
 var Enemy = function () {
@@ -30,7 +31,8 @@ Enemy.prototype.update = function (dt) {
     this.recycle();
 };
 
-//My algorithm to achieve less-smooth, wiggly, bug-like movement and range of speeds among enemies:
+// My algorithm to achieve less-smooth, wiggly, bug-like
+// movement and range of speeds among enemies:
 Enemy.prototype.wriggle = function (dt) {
     var varyEnemySpeed = Math.random() * 80;
     this.x += ((this.speed * dt) *
@@ -49,7 +51,7 @@ Enemy.prototype.randomizeSpeed = function () {
 
 Enemy.prototype.recycle = function () {
     if (this.x > 500) {
-        this.x = -100;
+        this.x = (Math.random() * -300) - 100;
         this.randomizeRow();
         this.randomizeSpeed();
     }
@@ -108,13 +110,14 @@ Player.prototype.handleInput = function () {
 // Place the player object in a variable called player
 var player = new Player(200, 400);
 
-
 var allEnemies = makeEnemies();
 
 function makeEnemies() {
     var enemies  =[];
     for (var i = 1; i <= (2 + difficulty); i++)
-        enemies.push(new Enemy());
+        setTimeout(function () {
+            enemies.push(new Enemy());
+        }, Math.floor(Math.random() * 2000));
     return enemies;
 }
 
