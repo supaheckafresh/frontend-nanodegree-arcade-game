@@ -110,12 +110,18 @@ Player.prototype.stop = function () {
 //TODO prevent moves during completion process.
 Player.prototype.checkIfLevelComplete = function () {
     if (this.y <= -14) {
-        setTimeout(function () {
-            alert("LEVEL " + difficulty + " COMPLETED!");
-            setDifficulty(++difficulty);
-            player.x = 200;
-            player.y = 400;
-        }, 1000);
+        if (difficulty === 10) {
+            setTimeout(function () {
+                alert("YOU WON! GAME OVER!");
+            }, 1000);
+        } else {
+            setTimeout(function () {
+                alert("LEVEL " + difficulty + " COMPLETED!");
+                setDifficulty(++difficulty);
+                player.x = 200;
+                player.y = 400;
+            }, 1000);
+        }
     }
 };
 
