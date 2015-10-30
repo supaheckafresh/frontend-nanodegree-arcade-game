@@ -76,30 +76,30 @@ Player.prototype.render = function () {
 Player.prototype.handleInput = function () {
     var key = arguments[0];
 
-    var vertMove = 83,
-        latMove = 101;
+    var verticalMove = 83,
+        lateralMove = 101;
 
-    var upperBound = -14,
-        lowerBound = 400,
-        leftBound = -2,
-        rightBound = 402;
+    var topBoundary = -14,
+        bottomBoundary = 400,
+        leftBoundary = -2,
+        rightBoundary = 402;
 
     switch(key) {
         case 'up':
-            if (this.y > upperBound)
-                this.y -= vertMove;
+            if (this.y > topBoundary)
+                this.y -= verticalMove;
                 break;
         case 'down':
-            if (this.y < lowerBound)
-                this.y += vertMove;
+            if (this.y < bottomBoundary)
+                this.y += verticalMove;
                 break;
         case 'left':
-            if (this.x > leftBound)
-                this.x -= latMove;
+            if (this.x > leftBoundary)
+                this.x -= lateralMove;
                 break;
         case 'right':
-            if (this.x < rightBound)
-                this.x += latMove;
+            if (this.x < rightBoundary)
+                this.x += lateralMove;
                 break;
     }
 };
