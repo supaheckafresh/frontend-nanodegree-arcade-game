@@ -3,6 +3,113 @@
 // speeds and number of bugs on canvas (plus 2).
 var difficulty = 2;
 
+function setDifficulty(level) {
+    if (level > 0 && level < )
+}
+
+
+// Now write your own player class
+// This class requires an update(), render() and
+// a handleInput() method.
+var Player = function (startX, startY) {
+    this.sprite = 'images/char-cat-girl.png';
+    this.x = startX;
+    this.y = startY;
+    this.speed = 1;
+
+    this.direction = null;
+    this.move = false;
+};
+
+Player.prototype.render = function () {ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.update = function (dt) {
+    var lastLocation;
+    var verticalMove = 83,
+        lateralMove = 101;
+    var topBoundary = -14,
+        bottomBoundary = 400,
+        leftBoundary = -2,
+        rightBoundary = 402;
+
+    //TODO ensure move is complete before new move is allowed.
+    if (this.move){
+        if (this.direction === 'up'
+            && Math.floor(this.y) > topBoundary) {
+            lastLocation = this.y;
+            while (this.y > lastLocation - verticalMove) {
+                this.y -= this.speed * dt;
+            }
+            this.stop();
+        } else if (this.direction === 'down'
+            && Math.ceil(this.y) < bottomBoundary) {
+            lastLocation = this.y;
+            while (this.y < lastLocation + verticalMove) {
+                this.y += this.speed * dt;
+            }
+            this.stop();
+        } else if (this.direction === 'left'
+            && Math.floor(this.x) > leftBoundary) {
+            lastLocation = this.x;
+            while (this.x > lastLocation - lateralMove) {
+                this.x -= this.speed * dt;
+            }
+            this.stop();
+        } else if (this.direction === 'right'
+            && Math.floor(this.x) < rightBoundary) {
+            lastLocation = this.x;
+            while (this.x < lastLocation + lateralMove) {
+                this.x += this.speed * dt;
+            }
+            this.stop();
+        }
+    }
+};
+
+Player.prototype.handleInput = function () {
+
+    var key = arguments[0];
+
+    switch(key) {
+        case 'up':
+            this.direction = 'up';
+            this.move = true;
+            break;
+        case 'down':
+            this.direction = 'down';
+            this.move = true;
+            break;
+        case 'left':
+            this.direction = 'left';
+            this.move = true;
+            break;
+        case 'right':
+            this.direction = 'right';
+            this.move = true;
+            break;
+    }
+};
+
+Player.prototype.stop = function () {
+    this.direction = null;
+    this.move = false;
+};
+
+// This listens for key presses and sends the keys to your
+// Player.handleInput() method. You don't need to modify this.
+document.addEventListener('keyup', function (e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    player.handleInput(allowedKeys[e.keyCode]);
+});
+
+
 // Enemies our player must avoid
 var Enemy = function () {
     // Variables applied to each of our instances go here,
@@ -57,53 +164,6 @@ Enemy.prototype.recycle = function () {
     }
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-var Player = function (startX, startY) {
-    this.sprite = 'images/char-cat-girl.png';
-    this.x = startX;
-    this.y = startY;
-};
-
-Player.prototype.update = function (dt) {
-};
-
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-Player.prototype.handleInput = function () {
-    var key = arguments[0];
-
-    var verticalMove = 83,
-        lateralMove = 101;
-
-    var topBoundary = -14,
-        bottomBoundary = 400,
-        leftBoundary = -2,
-        rightBoundary = 402;
-
-    switch(key) {
-        case 'up':
-            if (this.y > topBoundary)
-                this.y -= verticalMove;
-                break;
-        case 'down':
-            if (this.y < bottomBoundary)
-                this.y += verticalMove;
-                break;
-        case 'left':
-            if (this.x > leftBoundary)
-                this.x -= lateralMove;
-                break;
-        case 'right':
-            if (this.x < rightBoundary)
-                this.x += lateralMove;
-                break;
-    }
-};
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -120,16 +180,3 @@ function makeEnemies() {
         }, Math.floor(Math.random() * 2000));
     return enemies;
 }
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function (e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-
-    player.handleInput(allowedKeys[e.keyCode]);
-});
