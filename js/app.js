@@ -2,9 +2,20 @@
 // Difficulty setting positively affects average bug
 // speeds and number of bugs on canvas (plus 2).
 var difficulty = 2;
+console.log("Difficulty has been set to " + difficulty);
 
 function setDifficulty(level) {
-    if (level > 0 && level < )
+    if (level > 0 && level < 10) {
+        difficulty = parseInt(level);
+        console.log("Difficulty has been set to " + difficulty);
+
+        if (allEnemies.length !== difficulty + 2) {
+            allEnemies = makeEnemies();
+        }
+    } else {
+        (alert("Difficulty must be between 1-10!"));
+        setDifficulty(difficulty);
+    }
 }
 
 
