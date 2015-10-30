@@ -1,3 +1,6 @@
+//difficulty setting positively affects average bug speeds.
+var difficulty = 1;
+
 // Enemies our player must avoid
 var Enemy = function () {
     // Variables applied to each of our instances go here,
@@ -7,11 +10,8 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
-
-    var rows = [60, 143, 226, 309];
-    this.y = rows[Math.floor(Math.random() * 4)];
-
-    this.speed = Math.floor(Math.random() * 5) + 1;
+    this.randomizeRow();
+    this.randomizeSpeed();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -26,21 +26,41 @@ Enemy.prototype.update = function (dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.wriggle(dt);
+    this.recycle();
 };
 
-//To achieve less-smooth, wiggly, bug-like movement:
+//My algorithm to achieve less-smooth, wiggly, bug-like movement and range of speeds among enemies:
 Enemy.prototype.wriggle = function (dt) {
+    var varyEnemySpeed = Math.random() * 80;
     this.x += ((this.speed * dt) *
-        Math.random() * 80) + (Math.random() * 4);
+        varyEnemySpeed) +
+        (Math.random() * difficulty);
+};
+
+Enemy.prototype.randomizeRow = function () {
+    var rows = [60, 143, 226, 309];
+    this.y = rows[Math.floor(Math.random() * 4)];
+};
+
+Enemy.prototype.randomizeSpeed = function () {
+    this.speed = Math.floor(Math.random() * 5) + 1;
+};
+
+Enemy.prototype.recycle = function () {
+    if (this.x > 500) {
+        this.x = -100;
+        this.randomizeRow();
+        this.randomizeSpeed();
+    }
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function (x, y) {
+var Player = function (startX, startY) {
     this.sprite = 'images/char-cat-girl.png';
-    this.x = x;
-    this.y = y;
+    this.x = startX;
+    this.y = startY;
 };
 
 Player.prototype.update = function (dt) {
