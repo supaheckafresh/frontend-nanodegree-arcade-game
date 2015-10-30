@@ -5,7 +5,7 @@ var difficulty = 2;
 console.log("Difficulty has been set to " + difficulty);
 
 function setDifficulty(level) {
-    if (level > 0 && level < 10) {
+    if (level > 0 && level < 11) {
         difficulty = parseInt(level);
         console.log("Difficulty has been set to " + difficulty);
 
@@ -50,6 +50,9 @@ Player.prototype.update = function (dt) {
                 this.y -= this.speed * dt;
             }
             this.stop();
+
+            this.checkIfLevelComplete();
+
         } else if (this.direction === 'down'
             && Math.ceil(this.y) < bottomBoundary) {
             lastLocation = this.y;
@@ -102,6 +105,18 @@ Player.prototype.handleInput = function () {
 Player.prototype.stop = function () {
     this.direction = null;
     this.move = false;
+};
+
+//TODO prevent moves during completion process.
+Player.prototype.checkIfLevelComplete = function () {
+    if (this.y <= -14) {
+        setTimeout(function () {
+            alert("LEVEL " + difficulty + " COMPLETED!");
+            setDifficulty(++difficulty);
+            player.x = 200;
+            player.y = 400;
+        }, 1000);
+    }
 };
 
 // This listens for key presses and sends the keys to your
