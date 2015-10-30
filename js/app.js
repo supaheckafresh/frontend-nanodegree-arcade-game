@@ -1,3 +1,4 @@
+
 //difficulty setting positively affects average bug speeds.
 var difficulty = 1;
 
@@ -108,11 +109,11 @@ Player.prototype.handleInput = function () {
 var player = new Player(200, 400);
 
 
-var allEnemies = makeEnemies(4);
+var allEnemies = makeEnemies();
 
-function makeEnemies(quantity) {
+function makeEnemies() {
     var enemies  =[];
-    for (var i = 1; i <= quantity; i++)
+    for (var i = 1; i <= (2 + difficulty); i++)
         enemies.push(new Enemy());
     return enemies;
 }
