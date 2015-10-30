@@ -19,9 +19,6 @@ function setDifficulty(level) {
 }
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 var Player = function (startX, startY) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = startX;
