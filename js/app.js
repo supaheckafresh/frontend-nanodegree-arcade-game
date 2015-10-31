@@ -28,6 +28,7 @@ var Player = function (startX, startY) {
     this.speed = 1;
     this.direction = null;
     this.move = false;
+    this.alive = true;
 };
 
 Player.prototype.render = function () {ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -78,10 +79,18 @@ Player.prototype.update = function (dt) {
         }
     }
 
-    this.checkIfCollision();
+    if (this.alive === true) {
+        this.checkForCollision();
+    }
+
+    if (this.alive === false) {
+        this.restart();
+    }
 };
 
-Player.prototype.checkIfCollision = function () {
+Player.prototype.checkForCollision = function () {
+    var player = this;
+
     var playerTopOffset = 90,
         playerBottomOffset = 40,
         playerSideOffset = 17;
@@ -97,10 +106,10 @@ Player.prototype.checkIfCollision = function () {
             enemySideOffset = 2;
 
         var enemyLeftEdge = enemy.x + enemySideOffset,
-            enemyRigthEdge = enemy.x + enemy.width - enemySideOffset;
+            enemyRightEdge = enemy.x + enemy.width - enemySideOffset;
 
-        if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRigthEdge
-            || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRigthEdge) {
+        if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge
+            || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
 
             var enemyTopEdge = enemy.y + enemyTopOffset,
                 enemyBottomEdge = enemy.y + enemy.height - enemyBottomOffset;
@@ -108,9 +117,30 @@ Player.prototype.checkIfCollision = function () {
             if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
                 || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
 
-                console.log("collision");
+                // Enclosing die() in setTimeout seems to eliminate multiple alerts.
+                setTimeout(function () {
+                    player.die();
+                }, 1);
             }
         }
+    })
+};
+
+Player.prototype.die = function () {
+    this.alive = false;
+    alert('Oh no!!');
+};
+
+Player.prototype.restart = function () {
+    player.alive = true;
+    player.x = 200;
+    player.y = 400;
+
+    setDifficulty(2);
+
+    allEnemies.forEach(function (enemy) {
+        console.log(enemy);
+        enemy.recycle();
     })
 };
 
@@ -143,20 +173,20 @@ Player.prototype.stop = function () {
     this.move = false;
 };
 
-//TODO prevent moves during completion process.
+//TODO used set timeouts to allow player to complete final move before alert and restart. Better way?
 Player.prototype.checkIfLevelComplete = function () {
     if (this.y <= -14) {
         if (difficulty === 10) {
             setTimeout(function () {
                 alert("YOU WON! GAME OVER!");
-            }, 1000);
+            }, 1);
         } else {
             setTimeout(function () {
                 alert("LEVEL " + difficulty + " COMPLETED!");
                 setDifficulty(++difficulty);
                 player.x = 200;
                 player.y = 400;
-            }, 1000);
+            }, 1);
         }
     }
 };
@@ -202,7 +232,14 @@ Enemy.prototype.update = function (dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.wriggle(dt);
-    this.recycle();
+
+    if (isOffCanvas(this)) {
+        this.recycle();
+    }
+
+    function isOffCanvas(enemy) {
+        return enemy.x > 500;
+    }
 };
 
 // My algorithm to achieve less-smooth, wiggly, bug-like
@@ -224,11 +261,9 @@ Enemy.prototype.randomizeSpeed = function () {
 };
 
 Enemy.prototype.recycle = function () {
-    if (this.x > 500) {
-        this.x = (Math.random() * -300) - 100;
-        this.randomizeRow();
-        this.randomizeSpeed();
-    }
+    this.x = (Math.random() * -300) - 100;
+    this.randomizeRow();
+    this.randomizeSpeed();
 };
 
 
