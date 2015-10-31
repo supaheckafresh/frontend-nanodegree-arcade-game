@@ -25,13 +25,14 @@ var Player = function (startX, startY) {
     this.y = startY;
     this.height = 171;
     this.width = 101;
+    this.alive = true;
     this.speed = 1;
     this.direction = null;
     this.move = false;
-    this.alive = true;
 };
 
-Player.prototype.render = function () {ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.update = function (dt) {
@@ -100,7 +101,8 @@ Player.prototype.checkForCollision = function () {
         playerTopEdge = this.y + playerTopOffset,
         playerBottomEdge = this.y + this.height - playerBottomOffset;
 
-    allEnemies.forEach(function (enemy) {
+    allEnemies.some(function (enemy) {
+
         var enemyTopOffset = 78,
             enemyBottomOffset = 28,
             enemySideOffset = 2;
@@ -108,19 +110,29 @@ Player.prototype.checkForCollision = function () {
         var enemyLeftEdge = enemy.x + enemySideOffset,
             enemyRightEdge = enemy.x + enemy.width - enemySideOffset;
 
-        if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge
-            || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
 
-            var enemyTopEdge = enemy.y + enemyTopOffset,
-                enemyBottomEdge = enemy.y + enemy.height - enemyBottomOffset;
+        if (hasCollided()) {
+            //TODO Enclosing die() in setTimeout seems to eliminate multiple alerts. Better way?
+            setTimeout(function () {
 
-            if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
-                || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
+                player.die();
 
-                // Enclosing die() in setTimeout seems to eliminate multiple alerts.
-                setTimeout(function () {
-                    player.die();
-                }, 1);
+            }, 1);
+        }
+
+        function hasCollided() {
+
+            if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge
+                || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
+
+                var enemyTopEdge = enemy.y + enemyTopOffset,
+                    enemyBottomEdge = enemy.y + enemy.height - enemyBottomOffset;
+
+                if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
+                    || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
+
+                    return true;
+                }
             }
         }
     })
