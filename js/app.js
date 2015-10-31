@@ -23,8 +23,9 @@ var Player = function (startX, startY) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = startX;
     this.y = startY;
+    this.height = 171;
+    this.width = 101;
     this.speed = 1;
-
     this.direction = null;
     this.move = false;
 };
@@ -76,6 +77,41 @@ Player.prototype.update = function (dt) {
             this.stop();
         }
     }
+
+    this.checkIfCollision();
+};
+
+Player.prototype.checkIfCollision = function () {
+    var playerTopOffset = 90,
+        playerBottomOffset = 40,
+        playerSideOffset = 17;
+
+    var playerLeftEdge = this.x + playerSideOffset,
+        playerRightEdge = this.x + this.width - playerSideOffset,
+        playerTopEdge = this.y + playerTopOffset,
+        playerBottomEdge = this.y + this.height - playerBottomOffset;
+
+    allEnemies.forEach(function (enemy) {
+        var enemyTopOffset = 78,
+            enemyBottomOffset = 28,
+            enemySideOffset = 2;
+
+        var enemyLeftEdge = enemy.x + enemySideOffset,
+            enemyRigthEdge = enemy.x + enemy.width - enemySideOffset;
+
+        if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRigthEdge
+            || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRigthEdge) {
+
+            var enemyTopEdge = enemy.y + enemyTopOffset,
+                enemyBottomEdge = enemy.y + enemy.height - enemyBottomOffset;
+
+            if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
+                || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
+
+                console.log("collision");
+            }
+        }
+    })
 };
 
 Player.prototype.handleInput = function () {
@@ -148,6 +184,8 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
+    this.height = 171;
+    this.width = 101;
     this.randomizeRow();
     this.randomizeSpeed();
 };
