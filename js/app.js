@@ -260,7 +260,7 @@ Enemy.prototype.wriggle = function (dt) {
     var varyEnemySpeed = Math.random() * 80;
     this.x += ((this.speed * dt) *
         varyEnemySpeed) +
-        (Math.random() * difficulty);
+        (Math.random() * (difficulty / 2));
 };
 
 Enemy.prototype.randomizeRow = function () {
