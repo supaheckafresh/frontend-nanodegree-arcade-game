@@ -139,7 +139,6 @@ Player.prototype.restart = function () {
     setDifficulty(2);
 
     allEnemies.forEach(function (enemy) {
-        console.log(enemy);
         enemy.recycle();
     })
 };
