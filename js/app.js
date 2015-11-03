@@ -375,7 +375,7 @@ var allGems = makeGems();
 
 function makeGems() {
     var gems = [];
-    for (var i = 0; i < Math.floor(Math.random() * difficulty); i++) {
+    for (var i = 0; i < Math.floor(Math.random() * difficulty) + 1; i++) {
         gems.push(new Gem());
     }
     return gems;
