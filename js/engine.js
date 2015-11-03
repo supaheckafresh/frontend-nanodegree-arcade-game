@@ -128,6 +128,10 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
+
+        // Clear portion of top row so that top of player head doesn't stick around.
+        ctx.clearRect(0, 0, canvas.width, 100);
+
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
                 /* The drawImage function of the canvas' context element
@@ -143,6 +147,7 @@ var Engine = (function(global) {
 
         renderEntities();
     }
+
 
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined

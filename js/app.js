@@ -95,6 +95,8 @@ Player.prototype.update = function (dt) {
 };
 
 //TODO player.die() gets executed multiple times if player collides with more than one enemy at the same time. Fix.
+
+//TODO (separate from above) - refactor the collision code. There is duplication & doesn't seem very robust as is.
 Player.prototype.checkForCollision = function () {
     var player = this;
 
