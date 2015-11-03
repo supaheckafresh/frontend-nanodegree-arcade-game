@@ -1,7 +1,7 @@
 
 // Difficulty setting positively affects average bug
 // speeds and number of bugs on canvas (plus 2).
-var difficulty = 2;
+var difficulty = 1;
 console.log('Difficulty has been set to ' + difficulty);
 
 function setDifficulty(level) {

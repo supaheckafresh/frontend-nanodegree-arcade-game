@@ -17,8 +17,10 @@ Player.prototype.render = function () {
 
 Player.prototype.update = function (dt) {
     var lastLocation;
+
     var verticalMove = 83,
         lateralMove = 101;
+
     var topBoundary = -14,
         bottomBoundary = 400,
         leftBoundary = -2,
@@ -153,7 +155,7 @@ Player.prototype.checkForCollision = function () {
 
 Player.prototype.die = function () {
     this.alive = false;
-    alert('Oh no!!');
+    alert('OH NO!! GAME OVER.');
 };
 
 Player.prototype.restart = function () {
