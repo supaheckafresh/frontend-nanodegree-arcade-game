@@ -24,7 +24,6 @@ Player.prototype.update = function (dt) {
         leftBoundary = -2,
         rightBoundary = 402;
 
-    //TODO ensure move is complete before new move is allowed.
     if (this.move){
         if (this.direction === 'up'
             && Math.floor(this.y) > topBoundary) {
@@ -34,7 +33,13 @@ Player.prototype.update = function (dt) {
             }
             this.stop();
 
-            this.checkIfLevelComplete();
+
+            //TODO used setTimeout to allow player to complete final move before alert and restart. Better way?
+            var player = this;
+            setTimeout(function () {
+                player.checkIfLevelComplete();
+            }, 1);
+
 
         } else if (this.direction === 'down'
             && Math.ceil(this.y) < bottomBoundary) {
@@ -193,22 +198,18 @@ Player.prototype.stop = function () {
     this.move = false;
 };
 
-//TODO used set timeouts to allow player to complete final move before alert and restart. Better way?
 Player.prototype.checkIfLevelComplete = function () {
     if (this.y <= -14) {
         if (difficulty === 10) {
-            setTimeout(function () {
-                alert("YOU WON! GAME OVER!");
-            }, 1);
-        } else {
-            setTimeout(function () {
-                alert("LEVEL " + difficulty + " COMPLETED!");
-                player.points += 75 * difficulty;
+            alert("YOU WON! GAME OVER!");
 
-                setDifficulty(++difficulty);
-                player.x = 200;
-                player.y = 400;
-            }, 1);
+        } else {
+            alert("LEVEL " + difficulty + " COMPLETED!");
+            this.points += 75 * difficulty;
+
+            setDifficulty(++difficulty);
+            this.x = 200;
+            this.y = 400;
         }
     }
 };
