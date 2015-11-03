@@ -32,6 +32,7 @@ var Player = function (startX, startY) {
     this.speed = 1;
     this.direction = null;
     this.move = false;
+    this.points = 0;
 };
 
 Player.prototype.render = function () {
@@ -292,6 +293,8 @@ var Gem = function () {
 
     this.y = [90, 173, 256, 339][Math.floor(Math.random() * 4)];
     this.x = [13, 113, 213, 313, 413][Math.floor(Math.random() * 5)];
+
+    this.setPoints();
 };
 
 Gem.prototype.render = function () {
@@ -301,6 +304,21 @@ Gem.prototype.render = function () {
 Gem.prototype.update = function (dt) {
 
 };
+
+Gem.prototype.setPoints = function () {
+    switch (this.sprite) {
+        case 'images/gem-green.png':
+            this.points = 75;
+            break;
+        case 'images/gem-orange.png':
+            this.points = 150;
+            break;
+        case 'images/gem-blue.png':
+            this.points = 300;
+            break;
+    }
+};
+
 
 
 // Now instantiate your objects.
