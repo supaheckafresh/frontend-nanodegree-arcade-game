@@ -12,6 +12,9 @@ function setDifficulty(level) {
         if (allEnemies.length !== difficulty + 2) {
             allEnemies = makeEnemies();
         }
+
+        allGems = makeGems();
+
     } else {
         (alert("Difficulty must be between 1-10!"));
         setDifficulty(difficulty);
@@ -280,13 +283,12 @@ Enemy.prototype.recycle = function () {
 
 
 var Gem = function () {
-    this.spritesArray = [].push(
+
+    this.sprite = [
         'images/gem-green.png',
         'images/gem-orange.png',
-        'images/gem-blue.png');
-
-    //this.sprite = this.spritesArray[Math.floor(Math.random() * 3)];
-    this.sprite = 'images/gem-green.png';
+        'images/gem-blue.png']
+        [Math.floor(Math.random() * 3)];
 
     this.y = [90, 173, 256, 339][Math.floor(Math.random() * 4)];
     this.x = [13, 113, 213, 313, 413][Math.floor(Math.random() * 5)];
@@ -321,7 +323,9 @@ var allGems = makeGems();
 
 function makeGems() {
     var gems = [];
-    gems.push(new Gem());
+    for (var i = 0; i < Math.floor(Math.random() * difficulty); i++) {
+        gems.push(new Gem());
+    }
     return gems;
 }
 
