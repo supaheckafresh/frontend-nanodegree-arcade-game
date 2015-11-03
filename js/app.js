@@ -279,6 +279,28 @@ Enemy.prototype.recycle = function () {
 };
 
 
+var Gem = function () {
+    this.spritesArray = [].push(
+        'images/gem-green.png',
+        'images/gem-orange.png',
+        'images/gem-blue.png');
+
+    //this.sprite = this.spritesArray[Math.floor(Math.random() * 3)];
+    this.sprite = 'images/gem-green.png';
+
+    this.y = [60, 143, 226, 309][Math.floor(Math.random() * 4)];
+    this.x = [0, 100, 200, 300, 400][Math.floor(Math.random() * 5)];
+};
+
+Gem.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Gem.prototype.update = function (dt) {
+
+};
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -294,3 +316,12 @@ function makeEnemies() {
         }, Math.floor(Math.random() * 2000));
     return enemies;
 }
+
+var allGems = makeGems();
+
+function makeGems() {
+    var gems = [];
+    gems.push(new Gem());
+    return gems;
+}
+
