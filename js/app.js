@@ -143,6 +143,7 @@ Player.prototype.checkForCollision = function () {
         }
     });
 
+
     allGems.forEach(function (gem) {
 
         var gemLeftEdge = gem.x,
@@ -151,7 +152,7 @@ Player.prototype.checkForCollision = function () {
         if (playerLeftEdge >= gemLeftEdge && playerLeftEdge <= gemRightEdge
             || playerRightEdge >= gemLeftEdge && playerRightEdge <= gemRightEdge) {
 
-            var gemTopEdge = gem.y,
+            var gemTopEdge = gem.y + 40,
                 gemBottomEdge = gem.y + 86;
 
             if (playerTopEdge >= gemTopEdge && playerTopEdge <= gemBottomEdge
