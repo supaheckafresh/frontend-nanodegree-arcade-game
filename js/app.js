@@ -2,12 +2,13 @@
 // Difficulty setting positively affects average bug
 // speeds and number of bugs on canvas (plus 2).
 var difficulty = 2;
-console.log("Difficulty has been set to " + difficulty);
+console.log('Difficulty has been set to ' + difficulty);
 
 function setDifficulty(level) {
     if (level > 0 && level < 11) {
         difficulty = parseInt(level);
-        console.log("Difficulty has been set to " + difficulty);
+        console.log('Difficulty has been set to ' + difficulty);
+        console.log('Player points: ' + player.points);
 
         if (allEnemies.length !== difficulty + 2) {
             allEnemies = makeEnemies();
@@ -16,7 +17,7 @@ function setDifficulty(level) {
         allGems = makeGems();
 
     } else {
-        (alert("Difficulty must be between 1-10!"));
+        (alert('Difficulty must be between 1-10!'));
         setDifficulty(difficulty);
     }
 }
@@ -157,7 +158,9 @@ Player.prototype.checkForCollision = function () {
                 || playerBottomEdge >= gemTopEdge && playerBottomEdge <= gemBottomEdge) {
 
                 player.points += gem.pointsValue;
-                console.log(gem.pointsValue);
+
+                console.log('Player points: ' + player.points);
+
                 gem.disappear();
             }
         }
@@ -352,6 +355,7 @@ Gem.prototype.disappear = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player(200, 400);
+console.log('Player points: ' + player.points);
 
 var allEnemies = makeEnemies();
 
