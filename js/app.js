@@ -225,6 +225,8 @@ Player.prototype.checkIfLevelComplete = function () {
         } else {
             setTimeout(function () {
                 alert("LEVEL " + difficulty + " COMPLETED!");
+                player.points += 75 * difficulty;
+
                 setDifficulty(++difficulty);
                 player.x = 200;
                 player.y = 400;
