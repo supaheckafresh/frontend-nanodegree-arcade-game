@@ -288,8 +288,8 @@ var Gem = function () {
     //this.sprite = this.spritesArray[Math.floor(Math.random() * 3)];
     this.sprite = 'images/gem-green.png';
 
-    this.y = [60, 143, 226, 309][Math.floor(Math.random() * 4)];
-    this.x = [0, 100, 200, 300, 400][Math.floor(Math.random() * 5)];
+    this.y = [90, 173, 256, 339][Math.floor(Math.random() * 4)];
+    this.x = [13, 113, 213, 313, 413][Math.floor(Math.random() * 5)];
 };
 
 Gem.prototype.render = function () {
