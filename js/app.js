@@ -32,7 +32,7 @@ var Player = function (startX, startY) {
     this.speed = 1;
     this.direction = null;
     this.move = false;
-    this.pointsValue = 0;
+    this.points = 0;
 };
 
 Player.prototype.render = function () {
@@ -140,7 +140,29 @@ Player.prototype.checkForCollision = function () {
                 }
             }
         }
-    })
+    });
+
+    allGems.forEach(function (gem) {
+
+        var gemLeftEdge = gem.x,
+            gemRightEdge = gem.x + 75;
+
+        if (playerLeftEdge >= gemLeftEdge && playerLeftEdge <= gemRightEdge
+            || playerRightEdge >= gemLeftEdge && playerRightEdge <= gemRightEdge) {
+
+            var gemTopEdge = gem.y,
+                gemBottomEdge = gem.y + 86;
+
+            if (playerTopEdge >= gemTopEdge && playerTopEdge <= gemBottomEdge
+                || playerBottomEdge >= gemTopEdge && playerBottomEdge <= gemBottomEdge) {
+
+                player.points += gem.pointsValue;
+                console.log(gem.pointsValue);
+                console.log('yeeeah');
+            }
+        }
+
+    });
 };
 
 Player.prototype.die = function () {
@@ -318,6 +340,8 @@ Gem.prototype.setPointsValue = function () {
             break;
     }
 };
+
+
 
 
 
