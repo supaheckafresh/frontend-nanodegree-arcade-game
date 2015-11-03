@@ -158,7 +158,7 @@ Player.prototype.checkForCollision = function () {
 
                 player.points += gem.pointsValue;
                 console.log(gem.pointsValue);
-                console.log('yeeeah');
+                gem.disappear();
             }
         }
 
@@ -174,6 +174,7 @@ Player.prototype.restart = function () {
     player.alive = true;
     player.x = 200;
     player.y = 400;
+    player.points = 0;
 
     setDifficulty(2);
 
@@ -341,7 +342,9 @@ Gem.prototype.setPointsValue = function () {
     }
 };
 
-
+Gem.prototype.disappear = function () {
+    allGems.splice(allGems.indexOf(this), 1);
+};
 
 
 
