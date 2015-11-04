@@ -1,4 +1,6 @@
 
+var level = {won: false};
+
 // Difficulty setting positively affects average bug
 // speeds and number of bugs on canvas (plus 2).
 var difficulty = 1;
