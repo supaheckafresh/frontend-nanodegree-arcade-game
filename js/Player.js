@@ -5,10 +5,11 @@ var Player = function (startX, startY) {
     this.height = 171;
     this.width = 101;
     this.alive = true;
-    this.speed = 5;
+    this.speed = 600;
     this.direction = null;
-    this.animateMove = false;
+    this.move = false;
     this.points = 0;
+    this.lastPosition = {x: this.x, y: this.y};
 };
 
 Player.prototype.render = function () {
@@ -16,58 +17,46 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.update = function (dt) {
-    var newLocation;
-
-    var verticalMove = 83,
-        lateralMove = 101;
+    var verticalMove = 80,
+        lateralMove = 95;
 
     var topBoundary = -14,
         bottomBoundary = 400,
         leftBoundary = -2,
         rightBoundary = 402;
 
-    if (this.animateMove){
+    if (this.move){
 
         if (this.direction === 'up'
             && Math.floor(this.y) > topBoundary) {
-            newLocation = this.y - verticalMove;
-            while (this.y > newLocation) {
-                this.y -= this.speed * dt;
-            }
-            this.stop();
+
+            this.upAnimate(dt, verticalMove);
 
             if (hasReachedWater(this)) {
-                level.won = true;
+
+                this.stop();
+                this.advanceLevel();
             }
 
         } else if (this.direction === 'down'
             && Math.ceil(this.y) < bottomBoundary) {
-            newLocation = this.y + verticalMove;
-            while (this.y < newLocation) {
-                this.y += this.speed * dt;
-            }
-            this.stop();
+
+            this.downAnimate(dt, verticalMove);
 
         } else if (this.direction === 'left'
             && Math.floor(this.x) > leftBoundary) {
-            newLocation = this.x - lateralMove;
-            while (this.x > newLocation) {
-                this.x -= this.speed * dt;
-            }
-            this.stop();
+
+            this.leftAnimate(dt, lateralMove);
 
         } else if (this.direction === 'right'
             && Math.floor(this.x) < rightBoundary) {
-            newLocation = this.x + lateralMove;
-            while (this.x < newLocation) {
-                this.x += this.speed * dt;
-            }
-            this.stop();
+
+            this.rightAnimate(dt, lateralMove);
         }
     }
 
     function hasReachedWater(player) {
-        return player.y <= 14;
+        return player.y <= -10;
     }
 
     if (this.alive === true) {
@@ -77,15 +66,33 @@ Player.prototype.update = function (dt) {
     if (this.alive === false) {
         this.restart();
     }
+};
 
-    if (level.won === true) {
-        var player = this;
-        //TODO this setTimeout allows player to appear in water before alert. Not sure how to do without it.
-        setTimeout(function () {
+Player.prototype.upAnimate = function (dt, verticalMove) {
+    this.y -= this.speed * dt;
+    if (this.y <= this.lastPosition['y'] - verticalMove) {
+        this.stop();
+    }
+};
 
-            player.advanceLevel()
+Player.prototype.downAnimate = function (dt, verticalMove) {
+    this.y += this.speed * dt;
+    if (this.y >= this.lastPosition['y'] + verticalMove) {
+        this.stop();
+    }
+};
 
-        }, 1);
+Player.prototype.leftAnimate = function (dt, lateralMove) {
+    this.x -= this.speed * dt;
+    if (this.x <= this.lastPosition['x'] - lateralMove) {
+        this.stop();
+    }
+};
+
+Player.prototype.rightAnimate = function (dt, lateralMove) {
+    this.x += this.speed * dt;
+    if (this.x >= this.lastPosition['x'] + lateralMove) {
+        this.stop();
     }
 };
 
@@ -115,12 +122,9 @@ Player.prototype.checkForCollisions = function () {
 
 
         if (hasCollided()) {
-            //TODO Enclosing die() in setTimeout seems to eliminate multiple alerts. Better way?
-            setTimeout(function () {
 
-                player.die();
+            player.die();
 
-            }, 1);
         }
 
         function hasCollided() {
@@ -172,10 +176,12 @@ Player.prototype.die = function () {
 };
 
 Player.prototype.restart = function () {
-    player.alive = true;
-    player.x = 200;
-    player.y = 400;
-    player.points = 0;
+    this.stop();
+    this.alive = true;
+    this.x = 200;
+    this.y = 400;
+    this.lastPosition = {x: 200, y: 400};
+    this.points = 0;
 
     setDifficulty(2);
 
@@ -185,6 +191,8 @@ Player.prototype.restart = function () {
 };
 
 Player.prototype.advanceLevel = function () {
+    this.lastPosition = {x: 200, y: 400};
+
     if (difficulty === 10) {
         alert("YOU WON! GAME OVER!");
 
@@ -196,8 +204,6 @@ Player.prototype.advanceLevel = function () {
         this.x = 200;
         this.y = 400;
     }
-
-    level.won = false;
 };
 
 Player.prototype.handleInput = function () {
@@ -207,24 +213,25 @@ Player.prototype.handleInput = function () {
     switch(key) {
         case 'up':
             this.direction = 'up';
-            this.animateMove = true;
+            this.move = true;
             break;
         case 'down':
             this.direction = 'down';
-            this.animateMove = true;
+            this.move = true;
             break;
         case 'left':
             this.direction = 'left';
-            this.animateMove = true;
+            this.move = true;
             break;
         case 'right':
             this.direction = 'right';
-            this.animateMove = true;
+            this.move = true;
             break;
     }
 };
 
 Player.prototype.stop = function () {
     this.direction = null;
-    this.animateMove = false;
+    this.move = false;
+    this.lastPosition = {x: this.x, y: this.y};
 };
