@@ -1,3 +1,4 @@
+
 var Player = function (startX, startY) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = startX;
@@ -12,13 +13,15 @@ var Player = function (startX, startY) {
     this.lastPosition = {x: this.x, y: this.y};
 };
 
+
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
 Player.prototype.update = function (dt) {
     var verticalMove = 80,
-        lateralMove = 95;
+        lateralMove = 100;
 
     var topBoundary = -14,
         bottomBoundary = 400,
@@ -27,8 +30,7 @@ Player.prototype.update = function (dt) {
 
     if (this.move){
 
-        if (this.direction === 'up'
-            && Math.floor(this.y) > topBoundary) {
+        if (this.direction === 'up' && Math.floor(this.y) > topBoundary) {
 
             this.upAnimate(dt, verticalMove);
 
@@ -38,25 +40,25 @@ Player.prototype.update = function (dt) {
                 this.advanceLevel();
             }
 
-        } else if (this.direction === 'down'
-            && Math.ceil(this.y) < bottomBoundary) {
+
+        } else if (this.direction === 'down' && Math.ceil(this.y) < bottomBoundary) {
 
             this.downAnimate(dt, verticalMove);
 
-        } else if (this.direction === 'left'
-            && Math.floor(this.x) > leftBoundary) {
+
+        } else if (this.direction === 'left' && Math.floor(this.x) > leftBoundary) {
 
             this.leftAnimate(dt, lateralMove);
 
-        } else if (this.direction === 'right'
-            && Math.floor(this.x) < rightBoundary) {
+
+        } else if (this.direction === 'right' && Math.floor(this.x) < rightBoundary) {
 
             this.rightAnimate(dt, lateralMove);
         }
     }
 
     function hasReachedWater(player) {
-        return player.y <= -10;
+        return player.y <= -15;
     }
 
     if (this.alive === true) {
@@ -68,33 +70,71 @@ Player.prototype.update = function (dt) {
     }
 };
 
+
 Player.prototype.upAnimate = function (dt, verticalMove) {
     this.y -= this.speed * dt;
     if (this.y <= this.lastPosition['y'] - verticalMove) {
         this.stop();
+        this.alignInSquare();
     }
 };
+
 
 Player.prototype.downAnimate = function (dt, verticalMove) {
     this.y += this.speed * dt;
     if (this.y >= this.lastPosition['y'] + verticalMove) {
         this.stop();
+        this.alignInSquare();
     }
 };
+
 
 Player.prototype.leftAnimate = function (dt, lateralMove) {
     this.x -= this.speed * dt;
     if (this.x <= this.lastPosition['x'] - lateralMove) {
         this.stop();
+        this.alignInSquare();
     }
 };
+
 
 Player.prototype.rightAnimate = function (dt, lateralMove) {
     this.x += this.speed * dt;
     if (this.x >= this.lastPosition['x'] + lateralMove) {
         this.stop();
+        this.alignInSquare();
     }
 };
+
+
+Player.prototype.handleInput = function () {
+
+    var key = arguments[0];
+
+    switch(key) {
+        case 'up':
+            this.lastPosition = {x: this.x, y: this.y};
+            this.direction = 'up';
+            this.move = true;
+            break;
+        case 'down':
+            this.lastPosition = {x: this.x, y: this.y};
+            this.direction = 'down';
+            this.move = true;
+            break;
+        case 'left':
+            this.lastPosition = {x: this.x, y: this.y};
+            this.direction = 'left';
+            this.move = true;
+            break;
+        case 'right':
+            this.lastPosition = {x: this.x, y: this.y};
+            this.direction = 'right';
+            this.move = true;
+            break;
+    }
+};
+
 
 //TODO player.die() gets executed multiple times if player collides with more than one enemy at the same time. Maybe fix.
 
@@ -170,10 +210,12 @@ Player.prototype.checkForCollisions = function () {
     });
 };
 
+
 Player.prototype.die = function () {
     this.alive = false;
     alert('OH NO!! GAME OVER.');
 };
+
 
 Player.prototype.restart = function () {
     this.stop();
@@ -190,11 +232,13 @@ Player.prototype.restart = function () {
     })
 };
 
+
 Player.prototype.advanceLevel = function () {
     this.lastPosition = {x: 200, y: 400};
 
     if (difficulty === 10) {
         alert("YOU WON! GAME OVER!");
+        this.points += 150 * difficulty;
 
     } else {
         alert("LEVEL " + difficulty + " COMPLETED!");
@@ -206,32 +250,18 @@ Player.prototype.advanceLevel = function () {
     }
 };
 
-Player.prototype.handleInput = function () {
-
-    var key = arguments[0];
-
-    switch(key) {
-        case 'up':
-            this.direction = 'up';
-            this.move = true;
-            break;
-        case 'down':
-            this.direction = 'down';
-            this.move = true;
-            break;
-        case 'left':
-            this.direction = 'left';
-            this.move = true;
-            break;
-        case 'right':
-            this.direction = 'right';
-            this.move = true;
-            break;
-    }
-};
 
 Player.prototype.stop = function () {
     this.direction = null;
     this.move = false;
-    this.lastPosition = {x: this.x, y: this.y};
+};
+
+
+Player.prototype.alignInSquare = function () {
+    var allowedRows = [-15, 70, 152, 236, 319, 400],
+        allowedColumns = [0, 100, 200, 300, 400];
+
+    this.x = allowedColumns[Math.abs(Math.round(player.x / 100))];
+
+    this.y = allowedRows[Math.abs(Math.round(player.y / 82))];
 };
