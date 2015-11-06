@@ -218,7 +218,7 @@ Player.prototype.restart = function () {
     this.setLastPosition();
     this.points = 0;
 
-    setDifficulty(2);
+    setDifficulty(1);
 
     allEnemies.forEach(function (enemy) {
         enemy.recycle();
