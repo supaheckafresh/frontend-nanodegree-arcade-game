@@ -10,7 +10,7 @@ var Player = function (startX, startY) {
     this.direction = null;
     this.move = false;
     this.points = 0;
-    this.lastPosition = {x: this.x, y: this.y};
+    this.lastPosition = this.setLastPosition();
 };
 
 
@@ -104,24 +104,24 @@ Player.prototype.handleInput = function () {
 
     var key = arguments[0];
 
+    if (key) {
+        this.setLastPosition();
+    }
+
     switch(key) {
         case 'up':
-            this.lastPosition = {x: this.x, y: this.y};
             this.direction = 'up';
             this.move = true;
             break;
         case 'down':
-            this.lastPosition = {x: this.x, y: this.y};
             this.direction = 'down';
             this.move = true;
             break;
         case 'left':
-            this.lastPosition = {x: this.x, y: this.y};
             this.direction = 'left';
             this.move = true;
             break;
         case 'right':
-            this.lastPosition = {x: this.x, y: this.y};
             this.direction = 'right';
             this.move = true;
             break;
@@ -213,7 +213,7 @@ Player.prototype.restart = function () {
     this.stop();
     this.alive = true;
     this.moveToStartingSquare();
-    this.lastPosition = {x: 200, y: 400};
+    this.setLastPosition();
     this.points = 0;
 
     setDifficulty(2);
@@ -225,7 +225,6 @@ Player.prototype.restart = function () {
 
 
 Player.prototype.advanceLevel = function () {
-    this.lastPosition = {x: 200, y: 400};
 
     if (difficulty === 10) {
         alert("YOU WON! GAME OVER!");
@@ -237,6 +236,7 @@ Player.prototype.advanceLevel = function () {
 
         setDifficulty(++difficulty);
         this.moveToStartingSquare();
+        this.setLastPosition();
     }
 };
 
@@ -260,4 +260,9 @@ Player.prototype.alignInSquare = function () {
 Player.prototype.moveToStartingSquare = function () {
     this.x = 200;
     this.y = 400;
+};
+
+
+Player.prototype.setLastPosition = function () {
+    this.lastPosition = {x: this.x, y: this.y};
 };
