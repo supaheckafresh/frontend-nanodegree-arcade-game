@@ -166,6 +166,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        displayPoints(player);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -174,6 +175,14 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+    }
+
+    function displayPoints(player) {
+        ctx.font = 'small-caps 24px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.strokeStyle = 'white';
+        ctx.strokeText('Score: ' + player.points, 4, 510, 120);
+        ctx.fillText('Score: ' + player.points, 4, 510, 120);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
