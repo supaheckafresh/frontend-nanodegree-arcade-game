@@ -178,9 +178,10 @@ var Engine = (function(global) {
     }
 
     function displayPoints(player) {
-        ctx.font = 'small-caps 24px serif';
+        ctx.font = 'small-caps 29px Lobster';
         ctx.textBaseline = 'hanging';
         ctx.strokeStyle = 'white';
+        ctx.fillStyle = '#f50057';
         ctx.strokeText('Score: ' + player.points, 4, 510, 120);
         ctx.fillText('Score: ' + player.points, 4, 510, 120);
     }
