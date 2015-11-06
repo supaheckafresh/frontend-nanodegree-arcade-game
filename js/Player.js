@@ -1,16 +1,18 @@
 
-var Player = function (startX, startY) {
+var Player = function () {
     this.sprite = 'images/char-cat-girl.png';
-    this.x = startX;
-    this.y = startY;
-    this.height = 171;
-    this.width = 101;
+    this.moveToStartingSquare();
+
     this.alive = true;
+    this.points = 0;
+    this.lastPosition = this.setLastPosition();
+
     this.speed = 600;
     this.direction = null;
     this.move = false;
-    this.points = 0;
-    this.lastPosition = this.setLastPosition();
+
+    this.height = 171;
+    this.width = 101;
 };
 
 
