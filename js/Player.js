@@ -131,8 +131,7 @@ Player.prototype.handleInput = function () {
 };
 
 
-//TODO: refactor the collision code. Works, but there is duplication & maybe is not very robust.
-//TODO - MAYBE: player.die() gets executed multiple times if player collides with more than one enemy at the same time.
+//TODO: refactor the collision code. Works, but there is duplication & maybe could be more robust.
 Player.prototype.checkForCollisions = function () {
     var player = this;
 
@@ -231,7 +230,7 @@ Player.prototype.advanceLevel = function () {
 
     if (difficulty === 10) {
         alert("YOU WON! GAME OVER!");
-        this.points += 150 * difficulty;
+        this.points += 150 * difficulty; //BIG BONUS!!
 
     } else {
         alert("LEVEL " + difficulty + " COMPLETED!");

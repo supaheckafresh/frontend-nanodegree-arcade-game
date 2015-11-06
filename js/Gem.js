@@ -1,3 +1,4 @@
+
 var Gem = function () {
 
     this.sprite = [
@@ -12,13 +13,16 @@ var Gem = function () {
     this.setPointsValue();
 };
 
+
 Gem.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Gem.prototype.update = function (dt) {
 
+Gem.prototype.update = function (dt) {
+    //TODO: try adding some animation when player collides with gems
 };
+
 
 Gem.prototype.setPointsValue = function () {
     switch (this.sprite) {
@@ -33,6 +37,7 @@ Gem.prototype.setPointsValue = function () {
             break;
     }
 };
+
 
 Gem.prototype.disappear = function () {
     allGems.splice(allGems.indexOf(this), 1);
