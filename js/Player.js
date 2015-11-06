@@ -158,6 +158,7 @@ Player.prototype.checkForCollisions = function () {
         if (hasCollided()) {
 
             player.die();
+            return true;
 
         }
 
