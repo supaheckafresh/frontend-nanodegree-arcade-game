@@ -32,7 +32,7 @@ Player.prototype.update = function (dt) {
 
     if (this.move){
 
-        if (this.direction === 'up' && Math.floor(this.y) > TOP_BOUNDARY) {
+        if (this.direction === 'up' && this.y > TOP_BOUNDARY) {
             this.upAnimate(dt, VERTICAL_MOVE);
 
             if (hasReachedWater(this)) {
@@ -41,13 +41,13 @@ Player.prototype.update = function (dt) {
                 this.advanceLevel();
             }
 
-        } else if (this.direction === 'down' && Math.ceil(this.y) < BOTTOM_BOUNDARY) {
+        } else if (this.direction === 'down' && this.y < BOTTOM_BOUNDARY) {
             this.downAnimate(dt, VERTICAL_MOVE);
 
-        } else if (this.direction === 'left' && Math.floor(this.x) > LEFT_BOUNDARY) {
+        } else if (this.direction === 'left' && this.x > LEFT_BOUNDARY) {
             this.leftAnimate(dt, LATERAL_MOVE);
 
-        } else if (this.direction === 'right' && Math.floor(this.x) < RIGHT_BOUNDARY) {
+        } else if (this.direction === 'right' && this.x < RIGHT_BOUNDARY) {
             this.rightAnimate(dt, LATERAL_MOVE);
         }
     }
