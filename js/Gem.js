@@ -1,6 +1,5 @@
 
 var Gem = function () {
-
     this.sprite = [
         'images/gem-green.png',
         'images/gem-orange.png',
@@ -20,7 +19,7 @@ Gem.prototype.render = function () {
 
 
 Gem.prototype.update = function (dt) {
-    //TODO: try adding some animation when player collides with gems
+    // TODO: try adding some animation when player collides with gems
 };
 
 

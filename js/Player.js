@@ -22,18 +22,18 @@ Player.prototype.render = function () {
 
 
 Player.prototype.update = function (dt) {
-    var verticalMove = 80,
-        lateralMove = 100;
+    var VERTICAL_MOVE = 80,
+        LATERAL_MOVE = 100;
 
-    var topBoundary = -14,
-        bottomBoundary = 400,
-        leftBoundary = 0,
-        rightBoundary = 400;
+    var TOP_BOUNDARY = -14,
+        BOTTOM_BOUNDARY = 400,
+        LEFT_BOUNDARY = 0,
+        RIGHT_BOUNDARY = 400;
 
     if (this.move){
 
-        if (this.direction === 'up' && Math.floor(this.y) > topBoundary) {
-            this.upAnimate(dt, verticalMove);
+        if (this.direction === 'up' && Math.floor(this.y) > TOP_BOUNDARY) {
+            this.upAnimate(dt, VERTICAL_MOVE);
 
             if (hasReachedWater(this)) {
 
@@ -41,14 +41,14 @@ Player.prototype.update = function (dt) {
                 this.advanceLevel();
             }
 
-        } else if (this.direction === 'down' && Math.ceil(this.y) < bottomBoundary) {
-            this.downAnimate(dt, verticalMove);
+        } else if (this.direction === 'down' && Math.ceil(this.y) < BOTTOM_BOUNDARY) {
+            this.downAnimate(dt, VERTICAL_MOVE);
 
-        } else if (this.direction === 'left' && Math.floor(this.x) > leftBoundary) {
-            this.leftAnimate(dt, lateralMove);
+        } else if (this.direction === 'left' && Math.floor(this.x) > LEFT_BOUNDARY) {
+            this.leftAnimate(dt, LATERAL_MOVE);
 
-        } else if (this.direction === 'right' && Math.floor(this.x) < rightBoundary) {
-            this.rightAnimate(dt, lateralMove);
+        } else if (this.direction === 'right' && Math.floor(this.x) < RIGHT_BOUNDARY) {
+            this.rightAnimate(dt, LATERAL_MOVE);
         }
     }
 
@@ -131,27 +131,27 @@ Player.prototype.handleInput = function () {
 };
 
 
-//TODO: refactor the collision code. Works, but there is duplication & maybe could be more robust.
+// TODO: refactor the collision code. Works, but there is duplication & maybe could be more robust.
 Player.prototype.checkForCollisions = function () {
     var player = this;
 
-    var playerTopOffset = 90,
-        playerBottomOffset = 40,
-        playerSideOffset = 17;
+    var PLAYER_TOP_OFFSET = 90,
+        PLAYER_BOTTOM_OFFSET = 40,
+        PLAYER_SIDE_OFFSET = 17;
 
-    var playerLeftEdge = this.x + playerSideOffset,
-        playerRightEdge = this.x + this.width - playerSideOffset,
-        playerTopEdge = this.y + playerTopOffset,
-        playerBottomEdge = this.y + this.height - playerBottomOffset;
+    var playerLeftEdge = this.x + PLAYER_SIDE_OFFSET,
+        playerRightEdge = this.x + this.width - PLAYER_SIDE_OFFSET,
+        playerTopEdge = this.y + PLAYER_TOP_OFFSET,
+        playerBottomEdge = this.y + this.height - PLAYER_BOTTOM_OFFSET;
 
     allEnemies.some(function (enemy) {
 
-        var enemyTopOffset = 89,
-            enemyBottomOffset = 34,
-            enemySideOffset = 11;
+        var ENEMY_TOP_OFFSET = 89,
+            ENEMY_BOTTOM_OFFSET = 34,
+            ENEMY_SIDE_OFFSET = 11;
 
-        var enemyLeftEdge = enemy.x + enemySideOffset,
-            enemyRightEdge = enemy.x + enemy.width - enemySideOffset;
+        var enemyLeftEdge = enemy.x + ENEMY_SIDE_OFFSET,
+            enemyRightEdge = enemy.x + enemy.width - ENEMY_SIDE_OFFSET;
 
 
         if (hasCollided()) {
@@ -166,8 +166,8 @@ Player.prototype.checkForCollisions = function () {
             if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge
                 || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
 
-                var enemyTopEdge = enemy.y + enemyTopOffset,
-                    enemyBottomEdge = enemy.y + enemy.height - enemyBottomOffset;
+                var enemyTopEdge = enemy.y + ENEMY_TOP_OFFSET,
+                    enemyBottomEdge = enemy.y + enemy.height - ENEMY_BOTTOM_OFFSET;
 
                 if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
                     || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
@@ -198,7 +198,6 @@ Player.prototype.checkForCollisions = function () {
                 gem.disappear();
             }
         }
-
     });
 };
 
@@ -227,11 +226,11 @@ Player.prototype.restart = function () {
 Player.prototype.advanceLevel = function () {
 
     if (difficulty === 10) {
-        alert("YOU WON! GAME OVER!");
+        alert('YOU WON! GAME OVER!');
         this.points += 150 * difficulty; //BIG BONUS!!
 
     } else {
-        alert("LEVEL " + difficulty + " COMPLETED!");
+        alert('LEVEL ' + difficulty + ' COMPLETED!');
         this.points += 75 * difficulty;
 
         setDifficulty(++difficulty);
