@@ -1,4 +1,3 @@
-
 var Player = function () {
     this.sprite = 'images/char-cat-girl.png';
     this.moveToStartingSquare();
@@ -30,7 +29,7 @@ Player.prototype.update = function (dt) {
         LEFT_BOUNDARY = 0,
         RIGHT_BOUNDARY = 400;
 
-    if (this.move){
+    if (this.move) {
 
         if (this.direction === 'up' && this.y > TOP_BOUNDARY) {
             this.upAnimate(dt, VERTICAL_MOVE);
@@ -68,7 +67,7 @@ Player.prototype.update = function (dt) {
 
 Player.prototype.upAnimate = function (dt, verticalMove) {
     this.y -= this.speed * dt;
-    if (this.y <= this.lastPosition['y'] - verticalMove) {
+    if (this.y <= this.lastPosition.y - verticalMove) {
         this.stop();
         this.alignInSquare();
     }
@@ -77,7 +76,7 @@ Player.prototype.upAnimate = function (dt, verticalMove) {
 
 Player.prototype.downAnimate = function (dt, verticalMove) {
     this.y += this.speed * dt;
-    if (this.y >= this.lastPosition['y'] + verticalMove) {
+    if (this.y >= this.lastPosition.y + verticalMove) {
         this.stop();
         this.alignInSquare();
     }
@@ -86,7 +85,7 @@ Player.prototype.downAnimate = function (dt, verticalMove) {
 
 Player.prototype.leftAnimate = function (dt, lateralMove) {
     this.x -= this.speed * dt;
-    if (this.x <= this.lastPosition['x'] - lateralMove) {
+    if (this.x <= this.lastPosition.x - lateralMove) {
         this.stop();
         this.alignInSquare();
     }
@@ -95,7 +94,7 @@ Player.prototype.leftAnimate = function (dt, lateralMove) {
 
 Player.prototype.rightAnimate = function (dt, lateralMove) {
     this.x += this.speed * dt;
-    if (this.x >= this.lastPosition['x'] + lateralMove) {
+    if (this.x >= this.lastPosition.x + lateralMove) {
         this.stop();
         this.alignInSquare();
     }
@@ -110,7 +109,7 @@ Player.prototype.handleInput = function () {
         this.setLastPosition();
     }
 
-    switch(key) {
+    switch (key) {
         case 'up':
             this.direction = 'up';
             this.move = true;
@@ -163,14 +162,14 @@ Player.prototype.checkForCollisions = function () {
 
         function hasCollided() {
 
-            if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge
-                || playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
+            if (playerLeftEdge >= enemyLeftEdge && playerLeftEdge <= enemyRightEdge ||
+                playerRightEdge >= enemyLeftEdge && playerRightEdge <= enemyRightEdge) {
 
                 var enemyTopEdge = enemy.y + ENEMY_TOP_OFFSET,
                     enemyBottomEdge = enemy.y + enemy.height - ENEMY_BOTTOM_OFFSET;
 
-                if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge
-                    || playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
+                if (playerTopEdge >= enemyTopEdge && playerTopEdge <= enemyBottomEdge ||
+                    playerBottomEdge >= enemyTopEdge && playerBottomEdge <= enemyBottomEdge) {
 
                     return true;
                 }
@@ -184,14 +183,14 @@ Player.prototype.checkForCollisions = function () {
         var gemLeftEdge = gem.x,
             gemRightEdge = gem.x + 75;
 
-        if (playerLeftEdge >= gemLeftEdge && playerLeftEdge <= gemRightEdge
-            || playerRightEdge >= gemLeftEdge && playerRightEdge <= gemRightEdge) {
+        if (playerLeftEdge >= gemLeftEdge && playerLeftEdge <= gemRightEdge ||
+            playerRightEdge >= gemLeftEdge && playerRightEdge <= gemRightEdge) {
 
             var gemTopEdge = gem.y + 40,
                 gemBottomEdge = gem.y + 86;
 
-            if (playerTopEdge >= gemTopEdge && playerTopEdge <= gemBottomEdge
-                || playerBottomEdge >= gemTopEdge && playerBottomEdge <= gemBottomEdge) {
+            if (playerTopEdge >= gemTopEdge && playerTopEdge <= gemBottomEdge ||
+                playerBottomEdge >= gemTopEdge && playerBottomEdge <= gemBottomEdge) {
 
                 player.points += gem.pointsValue;
 
@@ -219,7 +218,7 @@ Player.prototype.restart = function () {
 
     allEnemies.forEach(function (enemy) {
         enemy.recycle();
-    })
+    });
 };
 
 

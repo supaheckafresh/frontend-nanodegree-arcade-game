@@ -30,9 +30,12 @@ var allGems = makeGems();
 function makeEnemies() {
     var enemies  =[];
     for (var i = 1; i <= (2 + difficulty); i++)
+
+        // setTimeout used so enemies don't all appear at once.
         setTimeout(function () {
             enemies.push(new Enemy());
         }, Math.floor(Math.random() * 2000));
+
     return enemies;
 }
 

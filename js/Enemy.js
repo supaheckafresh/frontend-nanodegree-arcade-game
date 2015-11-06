@@ -30,7 +30,8 @@ Enemy.prototype.update = function (dt) {
 };
 
 
-// My algorithm to achieve less-smooth, wiggly, bug-like movement and range of speeds among enemies:
+// My algorithm to achieve less-smooth, wiggly, bug-like
+// movement and range of speeds among enemies:
 Enemy.prototype.wriggle = function (dt) {
     var varyEnemySpeed = Math.random() * 80;
     this.x += ((this.speed * dt) *
