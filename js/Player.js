@@ -1,3 +1,4 @@
+
 var Player = function () {
     this.sprite = 'images/char-cat-girl.png';
     this.moveToStartingSquare();
@@ -201,6 +202,7 @@ Player.prototype.checkForCollisions = function () {
 };
 
 
+// TODO : replace level-up and die alerts with text animation & paused game.
 Player.prototype.die = function () {
     this.alive = false;
     alert('OH NO!! GAME OVER.');
