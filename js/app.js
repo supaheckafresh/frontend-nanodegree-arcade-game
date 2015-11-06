@@ -23,28 +23,13 @@ function setDifficulty(level) {
 }
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function (e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-
-    player.handleInput(allowedKeys[e.keyCode]);
-});
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 var player = new Player();
 console.log('Player points: ' + player.points);
 
-
 var allEnemies = makeEnemies();
+
+var allGems = makeGems();
+
 
 function makeEnemies() {
     var enemies  =[];
@@ -55,9 +40,6 @@ function makeEnemies() {
     return enemies;
 }
 
-
-var allGems = makeGems();
-
 function makeGems() {
     var gems = [];
     for (var i = 0; i < Math.floor(Math.random() * difficulty) + 1; i++) {
@@ -65,4 +47,16 @@ function makeGems() {
     }
     return gems;
 }
+
+
+document.addEventListener('keyup', function (e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    player.handleInput(allowedKeys[e.keyCode]);
+});
 
