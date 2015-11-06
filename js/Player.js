@@ -148,7 +148,7 @@ Player.prototype.checkForCollisions = function () {
 
         var enemyTopOffset = 89,
             enemyBottomOffset = 34,
-            enemySideOffset = 14;
+            enemySideOffset = 11;
 
         var enemyLeftEdge = enemy.x + enemySideOffset,
             enemyRightEdge = enemy.x + enemy.width - enemySideOffset;
