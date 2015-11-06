@@ -166,7 +166,7 @@ var Engine = (function(global) {
         });
 
         player.render();
-        displayPoints(player);
+        displayGameInfo(player);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -177,14 +177,19 @@ var Engine = (function(global) {
         // noop
     }
 
-    function displayPoints(player) {
+    function displayGameInfo(player) {
         ctx.font = 'small-caps 29px Lobster';
         ctx.textBaseline = 'hanging';
         ctx.strokeStyle = 'white';
         ctx.fillStyle = '#f50057';
+
         ctx.strokeText('Score: ' + player.points, 4, 510, 120);
         ctx.fillText('Score: ' + player.points, 4, 510, 120);
+
+        ctx.strokeText('Level: ' + difficulty, 4, 480, 120);
+        ctx.fillText('Level: ' + difficulty, 4, 480, 120);
     }
+
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
