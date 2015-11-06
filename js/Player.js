@@ -195,8 +195,6 @@ Player.prototype.checkForCollisions = function () {
 
                 player.points += gem.pointsValue;
 
-                console.log('Player points: ' + player.points);
-
                 gem.disappear();
             }
         }
