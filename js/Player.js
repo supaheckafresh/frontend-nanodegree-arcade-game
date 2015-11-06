@@ -31,7 +31,6 @@ Player.prototype.update = function (dt) {
     if (this.move){
 
         if (this.direction === 'up' && Math.floor(this.y) > topBoundary) {
-
             this.upAnimate(dt, verticalMove);
 
             if (hasReachedWater(this)) {
@@ -40,19 +39,13 @@ Player.prototype.update = function (dt) {
                 this.advanceLevel();
             }
 
-
         } else if (this.direction === 'down' && Math.ceil(this.y) < bottomBoundary) {
-
             this.downAnimate(dt, verticalMove);
 
-
         } else if (this.direction === 'left' && Math.floor(this.x) > leftBoundary) {
-
             this.leftAnimate(dt, lateralMove);
 
-
         } else if (this.direction === 'right' && Math.floor(this.x) < rightBoundary) {
-
             this.rightAnimate(dt, lateralMove);
         }
     }
@@ -136,9 +129,8 @@ Player.prototype.handleInput = function () {
 };
 
 
-//TODO player.die() gets executed multiple times if player collides with more than one enemy at the same time. Maybe fix.
-
-//TODO (separate from above) - refactor the collision code. There is duplication & doesn't seem very robust as is.
+//TODO: refactor the collision code. Works, but there is duplication & maybe is not very robust.
+//TODO - MAYBE: player.die() gets executed multiple times if player collides with more than one enemy at the same time.
 Player.prototype.checkForCollisions = function () {
     var player = this;
 
@@ -220,8 +212,7 @@ Player.prototype.die = function () {
 Player.prototype.restart = function () {
     this.stop();
     this.alive = true;
-    this.x = 200;
-    this.y = 400;
+    this.moveToStartingSquare();
     this.lastPosition = {x: 200, y: 400};
     this.points = 0;
 
@@ -245,8 +236,7 @@ Player.prototype.advanceLevel = function () {
         this.points += 75 * difficulty;
 
         setDifficulty(++difficulty);
-        this.x = 200;
-        this.y = 400;
+        this.moveToStartingSquare();
     }
 };
 
@@ -264,4 +254,10 @@ Player.prototype.alignInSquare = function () {
     this.x = allowedColumns[Math.abs(Math.round(player.x / 100))];
 
     this.y = allowedRows[Math.abs(Math.round(player.y / 82))];
+};
+
+
+Player.prototype.moveToStartingSquare = function () {
+    this.x = 200;
+    this.y = 400;
 };
