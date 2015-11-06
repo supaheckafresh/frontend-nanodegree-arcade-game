@@ -25,8 +25,8 @@ Player.prototype.update = function (dt) {
 
     var topBoundary = -14,
         bottomBoundary = 400,
-        leftBoundary = -2,
-        rightBoundary = 402;
+        leftBoundary = 0,
+        rightBoundary = 400;
 
     if (this.move){
 
